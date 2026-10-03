@@ -33,3 +33,23 @@ grade-report-automator/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
+
+## Docker
+
+Build the Docker image:
+
+```powershell
+docker build -t grade-report-automator .
+```
+
+Run the application inside a container:
+
+```powershell
+docker run --rm grade-report-automator
+```
+
+Run the container and save the generated report to the local `output` directory:
+
+```powershell
+docker run --rm --mount "type=bind,source=$($PWD.Path)\output,target=/app/output" grade-report-automator
+```
