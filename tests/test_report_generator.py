@@ -1,10 +1,12 @@
 import csv
 
 import pytest
+from pathlib import Path
 
 from src.report_generator import (
     calculate_result,
     generate_report,
+    parse_arguments,
     parse_score,
 )
 
@@ -69,3 +71,16 @@ def test_generate_report_rejects_missing_columns(tmp_path) -> None:
         generate_report(input_file, output_file)
 
     assert not output_file.exists()
+
+def test_parse_arguments_accepts_custom_paths() -> None:
+    args = parse_arguments(
+        [
+            "--input",
+            "data/custom.csv",
+            "--output",
+            "output/custom_report.csv",
+        ]
+    )
+
+    assert args.input == Path("data/custom.csv")
+    assert args.output == Path("output/custom_report.csv")

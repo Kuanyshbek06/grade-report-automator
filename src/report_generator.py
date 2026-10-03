@@ -1,3 +1,4 @@
+import argparse
 import csv
 from pathlib import Path
 
@@ -71,9 +72,36 @@ def generate_report(input_path: Path, output_path: Path) -> int:
     return len(students)
 
 
+def parse_arguments(
+    arguments: list[str] | None = None,
+) -> argparse.Namespace:
+    """Parse command-line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Validate student grades and generate a CSV report."
+    )
+
+    parser.add_argument(
+        "--input",
+        type=Path,
+        default=INPUT_FILE,
+        help=f"Input CSV file (default: {INPUT_FILE})",
+    )
+
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=OUTPUT_FILE,
+        help=f"Output CSV file (default: {OUTPUT_FILE})",
+    )
+
+    return parser.parse_args(arguments)
+
+
 def main() -> None:
-    processed_count = generate_report(INPUT_FILE, OUTPUT_FILE)
-    print(f"Report created: {OUTPUT_FILE}")
+    args = parse_arguments()
+    processed_count = generate_report(args.input, args.output)
+
+    print(f"Report created: {args.output}")
     print(f"Students processed: {processed_count}")
 
 
