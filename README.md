@@ -11,6 +11,9 @@ calculates pass/fail results, and generates a processed report.
 - Generates a new CSV report
 - Includes automated tests with pytest
 - Runs tests automatically with GitHub Actions
+- Validates required CSV columns
+- Detects missing, non-numeric, and out-of-range scores
+- Records validation errors without stopping the entire process 
 
 ## Project Structure
 
