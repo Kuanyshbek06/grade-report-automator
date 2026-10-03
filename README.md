@@ -73,3 +73,53 @@ You can also provide custom input and output paths:
 ```
 
 View all available command-line options:
+
+```powershell
+.\.venv\Scripts\python.exe src/report_generator.py --help
+```
+
+## Running Tests
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+```
+
+## Docker
+
+Build the Docker image:
+
+```powershell
+docker build -t grade-report-automator .
+```
+
+Run the application inside a container:
+
+```powershell
+docker run --rm grade-report-automator
+```
+
+Run the container and save the generated report to the local `output` directory:
+
+```powershell
+docker run --rm --mount "type=bind,source=$($PWD.Path)\output,target=/app/output" grade-report-automator
+```
+
+## Input Format
+
+The input CSV file must contain these columns:
+
+```csv
+student_id,name,subject,score
+1001,Aruzhan,Programming,88
+1002,Nursultan,Programming,74
+```
+
+Scores from 50 to 100 receive `Pass`. Scores from 0 to 49 receive `Fail`. Missing, non-numeric, or out-of-range scores receive `Invalid` with an error explanation.
+
+## Continuous Integration
+
+GitHub Actions automatically:
+
+- runs the pytest test suite;
+- builds the Docker image;
+- checks every push and pull request to the `main` branch.
